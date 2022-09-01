@@ -4,16 +4,12 @@ package register;
 import com.github.javafaker.Faker;
 import org.junit.BeforeClass;
 import framework.Configuration;
-import java.awt.BorderLayout;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
-import org.junit.Assert;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,43 +17,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
-
 public class RegisterTest {
 
     private static WebDriver driver;    
-    WebElement signInNameFieldElement = driver.findElement(By.id("fragment-46_username"));    
-    WebElement emailAdressFieldElement = driver.findElement(By.id("fragment-46_email"));
-    WebElement passwordFieldElement = driver.findElement(By.id("fragment-46_password"));
-    WebElement confirmPasswordFieldElement = driver.findElement(By.id("fragment-46_password2"));
-    WebElement countryFieldBoxElement = driver.findElement(By.id("fragment-46_profileFieldsForm_717170147_country"));
-    WebElement firstNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_1835267210_first-name"));
-    WebElement lastNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_614460147_last-name"));
-    WebElement promotionalEmailCheckBoxElement = driver.findElement(By.id("fragment-46_profileFieldsForm_237248213_oktocontact"));
-    WebElement termsOfServiceCheckBoxElement = driver.findElement(By.id("fragment-46_acceptAgreement"));
-    WebElement joinNowButtonElement = driver.findElement(By.cssSelector("a[class='internal-link create-account submit-button button']"));
-    
     protected Faker faker = new Faker();    
-    String signInNameDefaultPositiveValue = "aA1" + faker.name().firstName();
-    String emailDefaultPositiveValue = faker.internet().emailAddress();
-    String passwordDefaultPositiveValue = "aA1" + faker.internet().password();
-    String confirmPasswordDefaultPositiveValue = "aA1" + faker.internet().password();
-    String firstNameDefaultPositiveValue = faker.name().firstName();
-    String lastNameDefaultPositiveValue = faker.name().lastName();
-    String s = "defaultPositive";
-    String e = "defaultPositive";
-    String p = "defaultPositive";
-    String f = "defaultPositive";
-    String l = "defaultPositive";
+    int i = 0;
+    
     ArrayList<String> signInNameNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "   ", "a", "ab", " abc", "...", "---", "___"));
-    ArrayList<String> signInNamePositiveTestCasesList = new ArrayList<>(Arrays.asList("1234", "12345678901234567890", "abc", "aA1.-_"));
-    ArrayList<String> emailNegativeTestCasesList = new ArrayList<>(Arrays.asList("@2.3", "12.3", "1@.3", "1@23", "1@2.", "1@2.3@", " test@test.com"));
-    ArrayList<String> passwordNegativeTestCasesList = new ArrayList<>(Arrays.asList("a","123456","abcdefg","ABCDEFG","1234567","abcABCD","abc1234","ABC1234"));
+    ArrayList<String> signInNamePositiveTestCasesList = new ArrayList<>(Arrays.asList("Red", "4321", "12345678901234567890", "aA1.-_"));
+    ArrayList<String> emailNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "@2.3", "12.3", "1@.3", "1@23", "1@2.", "1@2.3@", " test@test.com"));
+    ArrayList<String> passwordNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "       ", "a","123456","abcdefg","ABCDEFG","1234567","abcABCD","abc1234","ABC1234"));
     ArrayList<String> passwordPositiveTestCasesList = new ArrayList<>(Arrays.asList("aA12345","aA123456","aA123456789012345678"," aA1`~!@#$%^&*()-_=+[{]};:'\"\\\\,<.>/?"));
     ArrayList<String> firstAndLastNameNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "  ", "Z"," Al","Al3","aaaa"));
     ArrayList<String> firstAndLastNamePositiveTestCasesList = new ArrayList<>(Arrays.asList("Al","Joe","abba","McArthur", "O'Connnor"));
-    int i = 0;
-    int y = 0;
-        
+    
     @BeforeClass
     public static void setUpClass() throws IOException {
         Configuration.init();
@@ -67,296 +40,333 @@ public class RegisterTest {
         driver.get("https://community.element14.com/user/createuser?ReturnUrl=%2F");
     }
     
-    @AfterClass
-    public static void tearDownClass() throws InterruptedException {
-        Thread.sleep(1500);
-        driver.quit();
-    }
+//    @AfterClass
+//    public static void tearDownClass() throws InterruptedException {
+//        Thread.sleep(1500);
+//        driver.quit();
+//    }
     
-    
-    
-    
-    
-    
-    public void inputAllFieldsFromLists(String s, String e, String p, String f, String l, String pr, String t) throws InterruptedException{        
-        if (s == "negativeTestCases")
-            y = signInNameNegativeTestCasesList.size();
-            else if (s == "positiveTestCases")
-                y = signInNamePositiveTestCasesList.size();
-            else if (e == "negativeTestCases")
-                y = emailNegativeTestCasesList.size();
-            else if (p == "negativeTestCases")
-                y = passwordNegativeTestCasesList.size();
-            else if (p == "positiveTestCases")
-                y = passwordPositiveTestCasesList.size();
-            else if (f == "negativeTestCases")
-                y = firstAndLastNameNegativeTestCasesList.size();
-            else if (f == "positiveTestCases")
-                y = firstAndLastNamePositiveTestCasesList.size();
-            else if (l == "negativeTestCases")
-                y = firstAndLastNameNegativeTestCasesList.size();
-            else if (l == "positiveTestCases")
-                y = firstAndLastNamePositiveTestCasesList.size();
-            else y=0;
-        for (i=0; i<y; i++){                           
-          
-            driver.get("https://community.element14.com/user/createuser?ReturnUrl=%2F");
-            Thread.sleep(1500); 
-            WebElement signInNameFieldElement = driver.findElement(By.id("fragment-46_username"));
-            if (s == "negativeTestCases")
-                signInNameFieldElement.sendKeys(signInNameNegativeTestCasesList.get(i));            
-                else if (s == "positiveTestCases")
-                    signInNameFieldElement.sendKeys(signInNamePositiveTestCasesList.get(i));
-                else
-                    signInNameFieldElement.sendKeys(signInNameDefaultPositiveValue);
+    public void testMethod(String signInValue, String emailValue, String passwordValue, String firstnameValue, String lastnameValue, String promoEmailValue, String tosCheckBox) throws InterruptedException{
+        driver.get("https://community.element14.com/user/createuser?ReturnUrl=%2F");
+            Thread.sleep(3000); 
             
+            WebElement signInNameFieldElement = driver.findElement(By.id("fragment-46_username"));
+            if (signInValue == "signInNameNegativeTestCases")
+                signInNameFieldElement.sendKeys(signInNameNegativeTestCasesList.get(i));            
+                else if (signInValue == "signInNamePositiveTestCases")
+                    signInNameFieldElement.sendKeys(signInNamePositiveTestCasesList.get(i));
+                else if (signInValue == "signInDefaultPositive")
+                    signInNameFieldElement.sendKeys("aA1" + faker.name().firstName());            
+                else signInNameFieldElement.sendKeys(signInValue);            
                 
-            WebElement emailAdressFieldElement = driver.findElement(By.id("fragment-46_email"));            
-            if (e == "negativeTestCases")
-                emailAdressFieldElement.sendKeys(emailNegativeTestCasesList.get(i));                                   
-                else
-                    emailAdressFieldElement.sendKeys(emailDefaultPositiveValue);          
+            WebElement emailAddressFieldElement = driver.findElement(By.id("fragment-46_email"));            
+            if (emailValue == "emailNegativeTestCases")
+                emailAddressFieldElement.sendKeys(emailNegativeTestCasesList.get(i));                                   
+                else if (emailValue == "emailDefaultPositive")
+                    emailAddressFieldElement.sendKeys(faker.internet().emailAddress());          
+                else emailAddressFieldElement.sendKeys(emailValue);
             
             WebElement passwordFieldElement = driver.findElement(By.id("fragment-46_password"));            
             WebElement confirmPasswordFieldElement = driver.findElement(By.id("fragment-46_password2"));                        
-            if (p == "negativeTestCases") {
+            if (passwordValue == "passwordNegativeTestCases") {
                 passwordFieldElement.sendKeys(passwordNegativeTestCasesList.get(i));            
                 confirmPasswordFieldElement.sendKeys(passwordNegativeTestCasesList.get(i));                
                 }
-                else if (p == "positiveTestCases") {
+                else if (passwordValue == "passwordPositiveTestCases") {
                     passwordFieldElement.sendKeys(passwordPositiveTestCasesList.get(i));            
                     confirmPasswordFieldElement.sendKeys(passwordPositiveTestCasesList.get(i));
                 }
-                else {
-                    passwordFieldElement.sendKeys(passwordDefaultPositiveValue);   
-                    confirmPasswordFieldElement.sendKeys(passwordDefaultPositiveValue);   
+                else if (passwordValue == "passwordDefaultPositive"){
+                    String generatedPassword = "aA1" + faker.internet().password();
+                    passwordFieldElement.sendKeys(generatedPassword);   
+                    confirmPasswordFieldElement.sendKeys(generatedPassword);   
                 }
+                else confirmPasswordFieldElement.sendKeys(passwordValue);
             
-            WebElement firstNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_1835267210_first-name"));
-            if (f == "negativeTestCases") 
-                firstNameFieldElement.sendKeys(firstAndLastNameNegativeTestCasesList.get(i));
-                else if (f == "positiveTestCases") 
-                firstNameFieldElement.sendKeys(firstAndLastNamePositiveTestCasesList.get(i));
-                    else
-                    firstNameFieldElement.sendKeys(firstNameDefaultPositiveValue);
+            WebElement firstnameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_1835267210_first-name"));
+            if (firstnameValue == "firstnameNegativeTestCases") 
+                firstnameFieldElement.sendKeys(firstAndLastNameNegativeTestCasesList.get(i));
+                else if (firstnameValue == "firstnamePositiveTestCases") 
+                    firstnameFieldElement.sendKeys(firstAndLastNamePositiveTestCasesList.get(i));
+                else if (firstnameValue == "firstnameDefaultPositive")
+                    firstnameFieldElement.sendKeys(faker.name().firstName());
+                else firstnameFieldElement.sendKeys(firstnameValue);
             
-            WebElement lastNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_614460147_last-name"));
-            if (l == "negativeTestCases") 
-                lastNameFieldElement.sendKeys(firstAndLastNameNegativeTestCasesList.get(i));
-            else if (l == "positiveTestCases") 
-                lastNameFieldElement.sendKeys(firstAndLastNamePositiveTestCasesList.get(i));
-                else
-                    lastNameFieldElement.sendKeys(lastNameDefaultPositiveValue);
+            WebElement lastnameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_614460147_last-name"));
+            if (lastnameValue == "lastnameNegativeTestCases") 
+                lastnameFieldElement.sendKeys(firstAndLastNameNegativeTestCasesList.get(i));
+                else if (lastnameValue == "lastnamePositiveTestCases") 
+                    lastnameFieldElement.sendKeys(firstAndLastNamePositiveTestCasesList.get(i));
+                else if (lastnameValue == "lastnameDefaultPositive")
+                    lastnameFieldElement.sendKeys(faker.name().lastName());
+                else lastnameFieldElement.sendKeys(lastnameValue);
             
             WebElement promotionalEmailCheckBoxElement = driver.findElement(By.id("fragment-46_profileFieldsForm_237248213_oktocontact"));
-            if (pr == "prChecked")
+            if (promoEmailValue == "prChecked")
                 promotionalEmailCheckBoxElement.click();
             
             WebElement termsOfServiceCheckBoxElement = driver.findElement(By.id("fragment-46_acceptAgreement"));
-            if (t == "tossChecked")
+            if (tosCheckBox == "tossChecked")
                 termsOfServiceCheckBoxElement.click();
-            
-            WebElement joinNowButtonElement = driver.findElement(By.cssSelector("a[class='internal-link create-account submit-button button']"));            
-            joinNowButtonElement.click();              
-            Thread.sleep(3500);      
-            // driver.navigate().refresh();  
-        }
-    }
-    
-    
-    public void inputAllFieldsFromCustomData(String c1, String c2, String c3, String c4, String c5, String c6, String c7, String c8) throws InterruptedException{
-        WebElement signInNameFieldElement = driver.findElement(By.id("fragment-46_username"));
-        signInNameFieldElement.sendKeys(c1);
-        WebElement emailAdressFieldElement = driver.findElement(By.id("fragment-46_email"));            
-        emailAdressFieldElement.sendKeys(c2);
-        WebElement passwordFieldElement = driver.findElement(By.id("fragment-46_password"));
-        passwordFieldElement.sendKeys(c3);
-        WebElement confirmPasswordFieldElement = driver.findElement(By.id("fragment-46_password2"));
-        confirmPasswordFieldElement.sendKeys(c4);
-        WebElement firstNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_1835267210_first-name"));
-        firstNameFieldElement.sendKeys(c5);
-        WebElement lastNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_614460147_last-name"));
-        lastNameFieldElement.sendKeys(c6);
-        WebElement promotionalEmailCheckBoxElement = driver.findElement(By.id("fragment-46_profileFieldsForm_237248213_oktocontact"));
-        if (c7 == "prChecked")
-            promotionalEmailCheckBoxElement.click();        
-        WebElement termsOfServiceCheckBoxElement = driver.findElement(By.id("fragment-46_acceptAgreement"));
-        if (c8 == "tossChecked")
-            termsOfServiceCheckBoxElement.click();
-        Thread.sleep(0500); 
-        WebElement joinNowButtonElement = driver.findElement(By.cssSelector("a[class='internal-link create-account submit-button button']"));            
-        joinNowButtonElement.click();          
-    }
-    
-    
-    public void newMethod(String s, String e, String p, String f, String l, String pr, String t) throws InterruptedException{
-         driver.get("https://community.element14.com/user/createuser?ReturnUrl=%2F");
-            Thread.sleep(1500); 
-            WebElement signInNameFieldElement = driver.findElement(By.id("fragment-46_username"));
-            if (s == "negativeTestCases")
-                signInNameFieldElement.sendKeys(signInNameNegativeTestCasesList.get(i));            
-                else if (s == "positiveTestCases")
-                    signInNameFieldElement.sendKeys(signInNamePositiveTestCasesList.get(i));
-                else
-                    signInNameFieldElement.sendKeys(signInNameDefaultPositiveValue);            
-                
-            WebElement emailAdressFieldElement = driver.findElement(By.id("fragment-46_email"));            
-            if (e == "negativeTestCases")
-                emailAdressFieldElement.sendKeys(emailNegativeTestCasesList.get(i));                                   
-                else
-                    emailAdressFieldElement.sendKeys(emailDefaultPositiveValue);          
-            
-            WebElement passwordFieldElement = driver.findElement(By.id("fragment-46_password"));            
-            WebElement confirmPasswordFieldElement = driver.findElement(By.id("fragment-46_password2"));                        
-            if (p == "negativeTestCases") {
-                passwordFieldElement.sendKeys(passwordNegativeTestCasesList.get(i));            
-                confirmPasswordFieldElement.sendKeys(passwordNegativeTestCasesList.get(i));                
-                }
-                else if (p == "positiveTestCases") {
-                    passwordFieldElement.sendKeys(passwordPositiveTestCasesList.get(i));            
-                    confirmPasswordFieldElement.sendKeys(passwordPositiveTestCasesList.get(i));
-                }
-                else {
-                    passwordFieldElement.sendKeys(passwordDefaultPositiveValue);   
-                    confirmPasswordFieldElement.sendKeys(passwordDefaultPositiveValue);   
-                }
-            
-            WebElement firstNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_1835267210_first-name"));
-            if (f == "negativeTestCases") 
-                firstNameFieldElement.sendKeys(firstAndLastNameNegativeTestCasesList.get(i));
-                else if (f == "positiveTestCases") 
-                firstNameFieldElement.sendKeys(firstAndLastNamePositiveTestCasesList.get(i));
-                    else
-                    firstNameFieldElement.sendKeys(firstNameDefaultPositiveValue);
-            
-            WebElement lastNameFieldElement = driver.findElement(By.id("fragment-46_profileFieldsForm_614460147_last-name"));
-            if (l == "negativeTestCases") 
-                lastNameFieldElement.sendKeys(firstAndLastNameNegativeTestCasesList.get(i));
-            else if (l == "positiveTestCases") 
-                lastNameFieldElement.sendKeys(firstAndLastNamePositiveTestCasesList.get(i));
-                else
-                    lastNameFieldElement.sendKeys(lastNameDefaultPositiveValue);
-            
-            WebElement promotionalEmailCheckBoxElement = driver.findElement(By.id("fragment-46_profileFieldsForm_237248213_oktocontact"));
-            if (pr == "prChecked")
-                promotionalEmailCheckBoxElement.click();
-            
-            WebElement termsOfServiceCheckBoxElement = driver.findElement(By.id("fragment-46_acceptAgreement"));
-            if (t == "tossChecked")
-                termsOfServiceCheckBoxElement.click();
-            
-            
+
             WebElement joinNowButtonElement = driver.findElement(By.cssSelector("a[class='internal-link create-account submit-button button']"));            
             joinNowButtonElement.click();  
-            Thread.sleep(0500);             
-                 
     }
-    
-    
-    
-    
-    
-    
     
     
     @Test
-    public void noInputOnPage(){        
+    public void noInputOnPage() throws InterruptedException{                
+        SoftAssertions softAssertions = new SoftAssertions();       
+        Thread.sleep(3000);
+        
         WebElement joinNowButtonElement = driver.findElement(By.cssSelector("a[class='internal-link create-account submit-button button']"));            
         joinNowButtonElement.click();
+//      
+        List<WebElement> signInEmptyFieldErrorMessage = driver.findElements(By.xpath("//li[@class='field-item required user-name']/span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(signInEmptyFieldErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        List<WebElement> emailEmptyFieldErrorMessage = driver.findElements(By.xpath("//li[@class='field-item required email']/span[contains(text(), 'This field is required.')]"));        
+        softAssertions.assertThat(emailEmptyFieldErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        List<WebElement> passwordEmptyFieldErrorMessage = driver.findElements(By.xpath("//li[@class='field-item required password']/span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(passwordEmptyFieldErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        List<WebElement> confirmPasswordEmptyFieldErrorMessage = driver.findElements(By.xpath("//li[@class='field-item required password2']/span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(confirmPasswordEmptyFieldErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        List<WebElement> firstNameEmptyFieldErrorMessage = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(firstNameEmptyFieldErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        List<WebElement> lastNameEmptyFieldErrorMessage = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][3]//span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(lastNameEmptyFieldErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        List<WebElement> termsOfServiseRequiredErrorMessage = driver.findElements(By.xpath("//li[@class='field-item required site-agreement']//span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(termsOfServiseRequiredErrorMessage.get(0).getText()).isEqualTo("This field is required.");
+        
+        softAssertions.assertAll();
     }
     
     @Test
     public void invalidSignInName() throws InterruptedException{  
         SoftAssertions softAssertions = new SoftAssertions();   
         for (i=0; i<signInNameNegativeTestCasesList.size(); i++){
-        newMethod("negativeTestCases", "e", "p", "f", "l", "pr", "tossChecked");
+        testMethod("signInNameNegativeTestCases", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossChecked");
+        
         List<WebElement> elementsList1 = driver.findElements(By.xpath("//li[@class='field-item required user-name']/span[contains(text(), 'This field is required.')]"));
         List<WebElement> elementsList2 = driver.findElements(By.xpath("//span[contains(text(), 'Please enter a value greater than or equal to 3.')]"));
         List<WebElement> elementsList3 = driver.findElements(By.xpath("//span[contains(text(), 'Your sign in name does not meet the requirements for this site.')]"));
         List<WebElement> elementsList4 = driver.findElements(By.xpath("//span[contains(text(), 'That sign in name is not available.')]"));
-        int passed = elementsList1.size() + elementsList2.size() + elementsList3.size() + elementsList4.size();                
-        if (passed == 0) 
-            System.out.println("DataNotPassedTests: " + signInNameNegativeTestCasesList.get(i));
-        softAssertions.assertThat(passed).isEqualTo(1);}
+        int listSum = elementsList1.size() + elementsList2.size() + elementsList3.size() + elementsList4.size();                
+        
+        if (listSum == 0) 
+            System.out.println("invalidSignInNameDataNotPassedTests: " + signInNameNegativeTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(1);}
         softAssertions.assertAll();
     }
     
     @Test
     public void RegisterWithAlreadyUsedUsernameAndEmail() throws InterruptedException{
-        inputAllFieldsFromCustomData("dragtomasevic", "dragan_tom@yahoo.com", "aA12345", "aA12345", "Tom", "Jones", s, "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions();  
+        testMethod("Oscar", "test@test.com", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossChecked");
+        
+        List<WebElement> signInNameTakenErrorMessage = driver.findElements(By.xpath("//span[contains(text(), 'That sign in name is not available.')]"));
+        softAssertions.assertThat(signInNameTakenErrorMessage.get(0).getText()).isEqualTo("That sign in name is not available.");
+        
+        List<WebElement> emailTakenErrorMessage = driver.findElements(By.xpath("//span[contains(text(), 'A user with this email address already exists.')]"));
+        softAssertions.assertThat(emailTakenErrorMessage.get(0).getText()).isEqualTo("A user with this email address already exists.");
+        
+        softAssertions.assertAll();        
     }
     
     @Test
     public void invalidEmailFormat() throws InterruptedException{
-        inputAllFieldsFromLists("s", "negativeTestCases",  "p", "f", "l", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<emailNegativeTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailNegativeTestCases", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossChecked");
+        
+        List<WebElement> elementsList1 = driver.findElements(By.xpath("//li[@class='field-item required email']/span[contains(text(), 'This field is required.')]"));
+        List<WebElement> elementsList2 = driver.findElements(By.xpath("//span[contains(text(), 'A user with this email address already exists.')]"));
+        List<WebElement> elementsList3 = driver.findElements(By.xpath("//span[contains(text(), 'Your email address is invalid.')]"));
+        int listSum = elementsList1.size() + elementsList2.size() + elementsList3.size();
+        if (listSum == 0) 
+            System.out.println("invalidEmailDataNotPassedTests: " + emailNegativeTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(1);}
+        softAssertions.assertAll();
     }
     
     @Test
     public void invalidPassword() throws InterruptedException{
-        inputAllFieldsFromLists("s", "e", "negativeTestCases", "f", "l", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<passwordNegativeTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordNegativeTestCases", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossChecked");
+        
+        List<WebElement> elementsList1 = driver.findElements(By.xpath("//li[@class='field-item required password']/span[contains(text(), 'This field is required.')]"));
+        List<WebElement> elementsList2 = driver.findElements(By.xpath("//span[contains(text(), 'Password does not meet the requirements for this site.')]"));
+        List<WebElement> elementsList3 = driver.findElements(By.xpath("//span[contains(text(), 'Password must be at least 7 characters')]"));
+        int listSum = elementsList1.size() + elementsList2.size() + elementsList3.size();
+        if (listSum == 0) 
+            System.out.println("invalidPasswordDataNotPassedTests: " + passwordNegativeTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(1);}
+        softAssertions.assertAll();
     }
     
     @Test
     public void differentPasswords() throws InterruptedException{
-        inputAllFieldsFromCustomData("c1", "c2", passwordDefaultPositiveValue, confirmPasswordDefaultPositiveValue, "c5", "c6", "c7", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions();           
+        Thread.sleep(3000);
+        
+        WebElement passwordFieldElement = driver.findElement(By.id("fragment-46_password"));            
+        passwordFieldElement.sendKeys("aA1" + faker.internet().password());   
+        WebElement confirmPasswordFieldElement = driver.findElement(By.id("fragment-46_password2"));   
+        confirmPasswordFieldElement.sendKeys("aA1" + faker.internet().password());   
+        
+        WebElement joinNowButtonElement = driver.findElement(By.cssSelector("a[class='internal-link create-account submit-button button']"));            
+        joinNowButtonElement.click();
+        
+        List<WebElement> passwordsDoNotMatch = driver.findElements(By.xpath("//li[@class='field-item required password2']/span[contains(text(), 'Passwords do not match')]"));
+        softAssertions.assertThat(passwordsDoNotMatch.get(0).getText()).isEqualTo("Passwords do not match");
+        softAssertions.assertAll();
     }
         
     @Test
     public void invalidFirstname() throws InterruptedException{
-        inputAllFieldsFromLists("s", "e", "p", "negativeTestCases", "l", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<firstAndLastNameNegativeTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnameNegativeTestCases", "lastnameDefaultPositive", "prNotChecked", "tossChecked");
+        
+        List<WebElement> firstnameNoInput = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'This field is required.')]"));
+        List<WebElement> firstnameInvalid = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'Here would be a path to error message: Invalid firstname. Must contain minimum of 2 letters.')]"));
+        int listSum = firstnameNoInput.size() + firstnameInvalid.size();
+        if (listSum == 0) 
+            System.out.println("invalidFirstnameDataNotPassedTests: " + firstAndLastNameNegativeTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(1);}
+        softAssertions.assertAll();
     }
     
     @Test
     public void invalidLastname() throws InterruptedException{
-        inputAllFieldsFromLists("s", "e", "p", "f", "negativeTestCases", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<firstAndLastNameNegativeTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameNegativeTestCases", "prNotChecked", "tossChecked");
+        
+        List<WebElement> lastnameNoInput = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][3]//span[contains(text(), 'This field is required.')]"));
+        List<WebElement> lastnameInvalid = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][3]//span[contains(text(), 'Here would be a path to error message: Invalid lastname. Must contain minimum of 2 letters.')]"));
+        int listSum = lastnameNoInput.size() + lastnameInvalid.size();
+        if (listSum == 0) 
+            System.out.println("invalidLastnameDataNotPassedTests: " + firstAndLastNameNegativeTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(1);}
+        softAssertions.assertAll();
     }
     
     @Test
     public void registerWithoutAcceptingToss() throws InterruptedException{
-        inputAllFieldsFromCustomData(signInNameDefaultPositiveValue, emailDefaultPositiveValue, passwordDefaultPositiveValue, passwordDefaultPositiveValue, firstNameDefaultPositiveValue, lastNameDefaultPositiveValue, "prChecked", "tossNotChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossNotChecked");
+        
+        List<WebElement> tossNotChecked = driver.findElements(By.xpath("//li[@class='field-item required site-agreement']//span[contains(text(), 'This field is required.')]"));
+        softAssertions.assertThat(tossNotChecked.get(0).getText()).isEqualTo("This field is required.");
+        softAssertions.assertAll();
     }  
-    
     
     @Test
     public void registerUsingAllPositiveTestData() throws InterruptedException{
-        inputAllFieldsFromCustomData(signInNameDefaultPositiveValue, emailDefaultPositiveValue, passwordDefaultPositiveValue, passwordDefaultPositiveValue, firstNameDefaultPositiveValue, lastNameDefaultPositiveValue, "prChecked", "tossChecked");
-        String expectedText = "Welcome to the community! Your account has been created and you are signed in.";
-        String actualText = driver.findElement(By.xpath("//p[contains(text(), 'Welcome to the community!')]")).getText();
-        assertEquals(actualText, expectedText);
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossChecked");
+        
+        List<WebElement> successfullyRegistered = driver.findElements(By.xpath("//p[contains(text(), 'Welcome to the community!')]"));
+        softAssertions.assertThat(successfullyRegistered.size()).isEqualTo(1);
+        softAssertions.assertAll();
     }
 
     @Test
     public void validPositiveSignInName() throws InterruptedException{
-        inputAllFieldsFromLists("positiveTestCases", "e", "p", "f", "l", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions();   
+        for (i=0; i<signInNamePositiveTestCasesList.size(); i++){
+        testMethod("signInNamePositiveTestCases", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossNotChecked");
+        
+        List<WebElement> elementsList1 = driver.findElements(By.xpath("//li[@class='field-item required user-name']/span[contains(text(), 'This field is required.')]"));
+        List<WebElement> elementsList2 = driver.findElements(By.xpath("//span[contains(text(), 'Please enter a value greater than or equal to 3.')]"));
+        List<WebElement> elementsList3 = driver.findElements(By.xpath("//span[contains(text(), 'Your sign in name does not meet the requirements for this site.')]"));
+        List<WebElement> elementsList4 = driver.findElements(By.xpath("//span[contains(text(), 'That sign in name is not available.')]"));
+        int listSum = elementsList1.size() + elementsList2.size() + elementsList3.size() + elementsList4.size();                
+        if (listSum == 1) 
+            System.out.println("validSignInNameDataNotPassedTests: " + signInNamePositiveTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(0);}
+        softAssertions.assertAll();
     }
 
     @Test
     public void validPositivePasswordInputData() throws InterruptedException{
-        inputAllFieldsFromLists("s", "e", "positiveTestCases", "f", "l", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<passwordPositiveTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordPositiveTestCases", "firstnameDefaultPositive", "lastnameDefaultPositive", "prNotChecked", "tossNotChecked");
+        
+        List<WebElement> elementsList1 = driver.findElements(By.xpath("//li[@class='field-item required password']/span[contains(text(), 'This field is required.')]"));
+        List<WebElement> elementsList2 = driver.findElements(By.xpath("//span[contains(text(), 'Password does not meet the requirements for this site.')]"));
+        List<WebElement> elementsList3 = driver.findElements(By.xpath("//span[contains(text(), 'Password must be at least 7 characters')]"));
+        int listSum = elementsList1.size() + elementsList2.size() + elementsList3.size();
+        if (listSum == 1) 
+            System.out.println("validPasswordDataNotPassedTests: " + passwordPositiveTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(0);}
+        softAssertions.assertAll(); 
     }
 
     @Test
     public void validFirstNameFormat() throws InterruptedException{
-        inputAllFieldsFromLists("s", "e", "p", "positiveTestCases", "l", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<firstAndLastNamePositiveTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnamePositiveTestCases", "lastnameDefaultPositive", "prNotChecked", "tossNotChecked");
+        
+        List<WebElement> firstnameNoInput = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'This field is required.')]"));
+        List<WebElement> firstnameInvalid = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'Here would be a path to error message: Invalid firstname. Must contain minimum of 2 letters.')]"));
+        int listSum = firstnameNoInput.size() + firstnameInvalid.size();
+        if (listSum == 1) 
+            System.out.println("validFirstnameDataNotPassedTests: " + firstAndLastNamePositiveTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(0);}
+        softAssertions.assertAll();
     }
     
     @Test
     public void validLastNameFormat() throws InterruptedException{
-        inputAllFieldsFromLists("s", "e", "p", "f", "positiveTestCases", "pr", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        for (i=0; i<firstAndLastNamePositiveTestCasesList.size(); i++){
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnamePositiveTestCases", "prNotChecked", "tossNotChecked");
+        
+        List<WebElement> firstnameNoInput = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'This field is required.')]"));
+        List<WebElement> firstnameInvalid = driver.findElements(By.xpath("//div[@id='fragment-46_profileFieldsForm']//li[@class='field-item'][2]//span[contains(text(), 'Here would be a path to error message: Invalid firstname. Must contain minimum of 2 letters.')]"));
+        int listSum = firstnameNoInput.size() + firstnameInvalid.size();
+        if (listSum == 1) 
+            System.out.println("validLastnameDataNotPassedTests: " + firstAndLastNamePositiveTestCasesList.get(i));
+        
+        softAssertions.assertThat(listSum).isEqualTo(0);}
+        softAssertions.assertAll();
     }
     
     @Test
     public void registerWithPromotionalEmail() throws InterruptedException{
-        inputAllFieldsFromCustomData(signInNameDefaultPositiveValue, emailDefaultPositiveValue, passwordDefaultPositiveValue, passwordDefaultPositiveValue, firstNameDefaultPositiveValue, lastNameDefaultPositiveValue, "prChecked", "tossChecked");
+        SoftAssertions softAssertions = new SoftAssertions(); 
+        
+        testMethod("signInDefaultPositive", "emailDefaultPositive", "passwordDefaultPositive", "firstnameDefaultPositive", "lastnameDefaultPositive", "prChecked", "tossChecked");
+        
+        List<WebElement> successfullyRegistered = driver.findElements(By.xpath("//p[contains(text(), 'Welcome to the community!')]"));
+        softAssertions.assertThat(successfullyRegistered.size()).isEqualTo(1); 
+        softAssertions.assertAll();
     }
 
-    
     @Test
     public void countrySelectDropDown(){
-        WebElement countrySelectDropDownElement = driver.findElement(By.cssSelector("#fragment-46_profileFieldsForm_717170147_country > option[value=\"AF\"]"));
+//selecting Japan from dropdown list
+        WebElement countrySelectDropDownElement = driver.findElement(By.cssSelector("#fragment-46_profileFieldsForm_717170147_country > option[value=\"JP\"]"));
         countrySelectDropDownElement.click();
     }
-    
-    
     
 }
