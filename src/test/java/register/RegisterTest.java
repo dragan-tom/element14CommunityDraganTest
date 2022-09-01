@@ -25,7 +25,7 @@ public class RegisterTest {
     
     ArrayList<String> signInNameNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "   ", "a", "ab", " abc", "...", "---", "___"));
     ArrayList<String> signInNamePositiveTestCasesList = new ArrayList<>(Arrays.asList("Red", "4321", "12345678901234567890", "aA1.-_"));
-    ArrayList<String> emailNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "@2.3", "12.3", "1@.3", "1@23", "1@2.", "1@2.3@", " test@test.com"));
+    ArrayList<String> emailNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "@2.3", "12.3", "1@.3", "1@23", "1@2.", "1@2.3@", " test2@test.com"));
     ArrayList<String> passwordNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "       ", "a","123456","abcdefg","ABCDEFG","1234567","abcABCD","abc1234","ABC1234"));
     ArrayList<String> passwordPositiveTestCasesList = new ArrayList<>(Arrays.asList("aA12345","aA123456","aA123456789012345678"," aA1`~!@#$%^&*()-_=+[{]};:'\"\\\\,<.>/?"));
     ArrayList<String> firstAndLastNameNegativeTestCasesList = new ArrayList<>(Arrays.asList("", "  ", "Z"," Al","Al3","aaaa"));
